@@ -6,6 +6,9 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=111, unique=True)
 
+    def __str__(self):
+        return self.name
+
 class Product(models.Model):
     category = models.ForeignKey(
         Category,
@@ -26,12 +29,23 @@ class Product(models.Model):
 
     new_expiry_date = models.DateField()
 
+    def __str__(self):
+        return self.name
+
     # class Meta(models.Model):
     #     verbose_name_plural = 'Товары'
     #     verbose_name = 'Товар'
 
 
-
 class ProductGallery(models.Model):
     gallery = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='gallery')
     image = models.ImageField()
+
+
+# class ProductRating(models.Model):
+#     """
+#
+#     """
+#     product = models.ForeignKey(Product, on_delete=models.CASCADE)
+#     rating = models.PositiveSmallIntegerField()
+
