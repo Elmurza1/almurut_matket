@@ -18,8 +18,7 @@ class FaqView(TemplateView):
 
 
 
-class LoginView(TemplateView):
-    template_name = 'login.html'
+
 
 class ProductDetailView(TemplateView):
     template_name = 'product-detail.html'

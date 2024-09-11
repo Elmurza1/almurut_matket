@@ -10,6 +10,10 @@ class RegisterView(TemplateView):
     template_name = 'register.html'
 
 
+from django.shortcuts import render
+from django.views import View
+from .models import CustomUser
+
 class UserMakeRegistrationView(View):
 
     def post(self, request, *args, **kwargs):
@@ -26,4 +30,14 @@ class UserMakeRegistrationView(View):
             return render(request, 'product-list.html')
         else:
             pass
+
+
+
+class LoginView(TemplateView):
+    template_name = 'login.html'
+
+
+class UserMakeLoginView(View):
+
+
 

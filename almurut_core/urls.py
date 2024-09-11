@@ -14,10 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
+from django.conf.urls.static import static
+from django.conf.urls.static import settings
 from django.urls import path
-from market.views import HomeView, ProductView, ShoppingView, ProductDetailView, FaqView, LoginView,   FavoriteView, PageFotFound
-from users.views import RegisterView, UserMakeRegistrationView
+from market.views import HomeView, ProductView, ShoppingView, ProductDetailView, FaqView,   FavoriteView, PageFotFound
+from users.views import RegisterView, UserMakeRegistrationView, LoginView
 
 
 urlpatterns = [
@@ -33,3 +36,4 @@ urlpatterns = [
     path('404/', PageFotFound.as_view(), name='404-list'),
     path('user_register_page/', UserMakeRegistrationView.as_view(), name='make-registration-user')
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
