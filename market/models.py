@@ -24,6 +24,7 @@ class Product(models.Model):
         validators=[MaxValueValidator(100)]
     )
     description = models.TextField(verbose_name='описмание')
+    short_descriptions = models.TextField(null=True)
     preview_image = models.ImageField()
     is_new = models.BooleanField()
 
