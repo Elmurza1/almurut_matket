@@ -1,3 +1,5 @@
+import datetime
+
 from django.views.generic import TemplateView, View
 from .models import Product
 
@@ -18,6 +20,14 @@ class HomeView(TemplateView):
 
 class ProductView(TemplateView):
     template_name = 'product-list.html'
+
+    def get_context_data(self, **kwargs):
+        context = {
+        'publication_list': Product.objects.all(),
+        'new': datetime.datetime.now().date()
+    }
+        return context
+
 
 
 class ShoppingView(TemplateView):

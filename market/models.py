@@ -33,6 +33,16 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def get_price_with_sales(self):
+        """Возвращает цену с учётом скидки"""
+        if self.price is None or self.sales_percent is None:
+            return self.price  # Можешь вернуть 0 или другое значение, если одно из полей пустое
+
+        if self.sales_percent == 0:
+            return self.price
+
+        return int((self.price / 100) * (100 - self.sales_percent))
+
     # class Meta(models.Model):
     #     verbose_name_plural = 'Товары'
     #     verbose_name = 'Товар'
