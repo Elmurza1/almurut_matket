@@ -1,5 +1,6 @@
 import datetime
 
+from django.http import Http404
 from django.views.generic import TemplateView, View
 from .models import Product
 
@@ -42,6 +43,19 @@ class FaqView(TemplateView):
 
 class ProductDetailView(TemplateView):
     template_name = 'product-detail.html'
+
+    def get_context_data(self, **kwargs):
+        try:
+            product = Product.objects.get(id=kwargs['pk'])
+        except Product.DoesNotExist:
+            raise Http404
+
+        context = {
+            'product': product
+        }
+        return context
+
+
 
 
 class RegisterView(TemplateView):
