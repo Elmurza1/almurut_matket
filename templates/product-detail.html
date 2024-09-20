@@ -1,5 +1,6 @@
-{%extends 'base.html'%}
-{%load static%}
+{% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
     <body>
     <!--[if lt IE 8]>
@@ -146,10 +147,10 @@
                                 <div class="hb-menu">
                                     <nav>
                                         <ul>
-                                            <li><a href="{%url 'home-list'%}">Home</a></li>
-                                            <li><a href="{%url 'sopping-list'%}">Shop</a></li>
-                                            <li><a href="{%url 'fag-list'%}">FAQ</a></li>
-                                            <li><a href="{%url 'register-list'%}">My account</a></li>
+                                            <li><a href="">Home</a></li>
+                                            <li><a href="">Shop</a></li>
+                                            <li><a href="">FAQ</a></li>
+                                            <li><a href="">My account</a></li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -161,7 +162,7 @@
                 <!-- Header Bottom Area End Here -->
                 <!-- Begin Mobile Menu Area -->
                 <div class="mobile-menu-area d-lg-none d-xl-none col-12">
-                    <div class="container"> 
+                    <div class="container">
                         <div class="row">
                             <div class="mobile-menu">
                             </div>
@@ -189,34 +190,14 @@
                     <div class="row single-product-area">
                         <div class="col-lg-5 col-md-6">
                            <!-- Product Details Left -->
-                           <div class="product-details-left">
+                            <div class="product-details-left">
                                 <div class="product-details-images slider-navigation-1">
                                     <div class="lg-image">
                                         <img src="{{ product.preview_image.url }}" alt="product image">
                                     </div>
-                                    <div class="lg-image">
-                                        <img src="{% static 'images/product/large-size/2.jpg'%}" alt="product image">
-                                    </div>
-                                    <div class="lg-image">
-                                        <img src="{% static 'images/product/large-size/3.jpg'%}" alt="product image">
-                                    </div>
-                                    <div class="lg-image">
-                                        <img src="{% static 'images/product/large-size/4.jpg'%}" alt="product image">
-                                    </div>
-                                    <div class="lg-image">
-                                        <img src="{% static 'images/product/large-size/5.jpg'%}" alt="product image">
-                                    </div>
-                                    <div class="lg-image">
-                                        <img src="{% static 'images/product/large-size/6.jpg'%}" alt="product image">
-                                    </div>
                                 </div>
                                 <div class="product-details-thumbs slider-thumbs-1">
-                                    <div class="sm-image"><img src="{% static 'images/product/small-size/1.jpg'%}" alt="product image thumb"></div>
-                                    <div class="sm-image"><img src="{% static 'images/product/small-size/2.jpg'%}" alt="product image thumb"></div>
-                                    <div class="sm-image"><img src="{% static 'images/product/small-size/3.jpg'%}" alt="product image thumb"></div>
-                                    <div class="sm-image"><img src="{% static 'images/product/small-size/4.jpg'%}" alt="product image thumb"></div>
-                                    <div class="sm-image"><img src="{% static 'images/product/small-size/5.jpg'%}" alt="product image thumb"></div>
-                                    <div class="sm-image"><img src="{% static 'images/product/small-size/6.jpg'%}" alt="product image thumb"></div>
+                                    <div class="sm-image"><img src="images/product/small-size/1.jpg" alt="product image thumb"></div>
                                 </div>
                             </div>
                             <!--// Product Details Left -->
@@ -225,8 +206,8 @@
                         <div class="col-lg-7 col-md-6">
                             <div class="product-details-view-content sp-normal-content pt-60">
                                 <div class="product-info">
-                                    <h2>Today is a good day Framed poster</h2>
-                                    <span class="product-details-ref">Reference: demo_15</span>
+                                    <h2>{{ product.name }}</h2>
+                                    <span class="product-details-ref">Категория: {{ product.category.name }}</span>
                                     <div class="rating-box pt-20">
                                         <ul class="rating rating-with-review-item">
                                             <li><i class="fa fa-star-o"></i></li>
@@ -239,11 +220,11 @@
                                         </ul>
                                     </div>
                                     <div class="price-box pt-20">
-                                        <span class="new-price new-price-2">$57.98</span>
+                                        <span class="new-price new-price-2">{{ product.get_price_with_sales }} сом</span>
                                     </div>
                                     <div class="product-desc">
                                         <p>
-                                            <span>100% cotton double printed dress. Black and white striped top and orange high waisted skater skirt bottom. Lorem ipsum dolor sit amet, consectetur adipisicing elit. quibusdam corporis, earum facilis et nostrum dolorum accusamus similique eveniet quia pariatur.
+                                            <span>{{ product.description }}
                                             </span>
                                         </p>
                                     </div>
@@ -272,7 +253,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -284,10 +265,10 @@
                         <div class="col-lg-12">
                             <div class="li-product-tab">
                                 <ul class="nav li-product-menu">
-                                   <li><a class="active" data-toggle="tab" href="#description"><span>{{product.description}}</span></a></li>
+                                   <li><a class="active" data-toggle="tab" href="#description"><span>Description</span></a></li>
                                    <li><a data-toggle="tab" href="#product-details"><span>Product Details</span></a></li>
                                    <li><a data-toggle="tab" href="#reviews"><span>Reviews</span></a></li>
-                                </ul>               
+                                </ul>
                             </div>
                             <!-- Begin Li's Tab Menu Content Area -->
                         </div>
@@ -301,7 +282,7 @@
                         <div id="product-details" class="tab-pane" role="tabpanel">
                             <div class="product-details-manufacturer">
                                 <a href="#">
-                                    <img src="images/product-details/1.jpg" alt="Product Manufacturer Image">
+                                    <img src="{% static 'images/product-details/1.jpg' %}" alt="Product Manufacturer Image">
                                 </a>
                                 <p><span>Reference</span> demo_7</p>
                                 <p><span>Reference</span> demo_7</p>
@@ -340,11 +321,11 @@
                                                     <div class="modal-inner-area row">
                                                         <div class="col-lg-6">
                                                            <div class="li-review-product">
-                                                               <img src="images/product/large-size/3.jpg" alt="Li's Product">
+                                                               <img src="{{ product.preview_image.url }}" alt="Li's Product">
                                                                <div class="li-review-product-desc">
-                                                                   <p class="li-product-name">{{product.name}}</p>
+                                                                   <p class="li-product-name">{{ product.name }}</p>
                                                                    <p>
-                                                                       <span>Beach Camera Exclusive Bundle - Includes Two Samsung Radiant 360 R3 Wi-Fi Bluetooth Speakers. Fill The Entire Room With Exquisite Sound via Ring Radiator Technology. Stream And Control R3 Speakers Wirelessly With Your Smartphone. Sophisticated, Modern Design </span>
+                                                                       <span>{{ product.description }}</span>
                                                                    </p>
                                                                </div>
                                                            </div>
@@ -355,11 +336,12 @@
                                                                 <div class="feedback-area">
                                                                     <div class="feedback">
                                                                         <h3 class="feedback-title">Our Feedback</h3>
-                                                                        <form action="#">
+                                                                        <form action="{% url 'send-feedback-url' product.id %}" method="POST">
+                                                                            {% csrf_token %}
                                                                             <p class="your-opinion">
                                                                                 <label>Your Rating</label>
                                                                                 <span>
-                                                                                    <select class="star-rating">
+                                                                                    <select name="rating_value" class="star-rating">
                                                                                       <option value="1">1</option>
                                                                                       <option value="2">2</option>
                                                                                       <option value="3">3</option>
@@ -386,7 +368,8 @@
                                                                                 </p>
                                                                                 <div class="feedback-btn pb-15">
                                                                                     <a href="#" class="close" data-dismiss="modal" aria-label="Close">Close</a>
-                                                                                    <a href="#">Submit</a>
+                                                                                    <br>
+                                                                                    <input type="submit" href="#" value="Отправить">
                                                                                 </div>
                                                                             </div>
                                                                         </form>
@@ -399,7 +382,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>   
+                                    </div>
                                     <!-- Quick View | Modal Area End Here -->
                                 </div>
                             </div>
@@ -446,7 +429,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <h4><a class="product_name" href="single-product.html">{{ product.name }}</a></h4>
+                                                    <h4><a class="product_name" href="single-product.html">Accusantium dolorem1</a></h4>
                                                     <div class="price-box">
                                                         <span class="new-price">$46.80</span>
                                                     </div>
@@ -487,7 +470,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <h4><a class="product_name" href="single-product.html">{{ product.name }}</a></h4>
+                                                    <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
                                                     <div class="price-box">
                                                         <span class="new-price new-price-2">$71.80</span>
                                                         <span class="old-price">$77.22</span>
@@ -571,7 +554,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <h4><a class="product_name" href="single-product.html">{{ product.name }}</a></h4>
+                                                    <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
                                                     <div class="price-box">
                                                         <span class="new-price new-price-2">$71.80</span>
                                                         <span class="old-price">$77.22</span>
@@ -655,7 +638,7 @@
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <h4><a class="product_name" href="single-product.html">{{ product.name }}</a></h4>
+                                                    <h4><a class="product_name" href="single-product.html">Mug Today is a good day</a></h4>
                                                     <div class="price-box">
                                                         <span class="new-price new-price-2">$71.80</span>
                                                         <span class="old-price">$77.22</span>
@@ -844,7 +827,7 @@
                                                 <img src="images/product/large-size/6.jpg" alt="product image">
                                             </div>
                                         </div>
-                                        <div class="product-details-thumbs slider-thumbs-1">                                        
+                                        <div class="product-details-thumbs slider-thumbs-1">
                                             <div class="sm-image"><img src="images/product/small-size/1.jpg" alt="product image thumb"></div>
                                             <div class="sm-image"><img src="images/product/small-size/2.jpg" alt="product image thumb"></div>
                                             <div class="sm-image"><img src="images/product/small-size/3.jpg" alt="product image thumb"></div>
@@ -859,7 +842,7 @@
                                 <div class="col-lg-7 col-md-6 col-sm-6">
                                     <div class="product-details-view-content pt-60">
                                         <div class="product-info">
-                                            <h2>Today is a good day Framed poster</h2>
+                                            <h2>{{ product.name }}</h2>
                                             <span class="product-details-ref">Reference: demo_15</span>
                                             <div class="rating-box pt-20">
                                                 <ul class="rating rating-with-review-item">
@@ -922,13 +905,8 @@
                         </div>
                     </div>
                 </div>
-            </div>   
+            </div>
             <!-- Quick View | Modal Area End Here -->
         </div>
-        <!-- Body Wrapper End Here -->
-        <!-- jQuery-V1.12.4 -->
-
     </body>
-
-<!-- single-product-normal31:50-->
-{%endblock%}
+{% endblock %}

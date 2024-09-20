@@ -1,5 +1,8 @@
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+
+from users.models import CustomUser
+
 
 # Create your models here.
 
@@ -52,6 +55,22 @@ class ProductGallery(models.Model):
     gallery = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='gallery')
     image = models.ImageField()
 
+class ProductUserRating(models.Model):
+    """Модель для рейтингов которые поставил пользователь для товара"""
+
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    rating = models.PositiveSmallIntegerField(
+        validators=[MaxValueValidator(5), MinValueValidator(1)]
+    )
+    name = models.CharField(max_length=111)
+    email = models.EmailField()
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        unique_together = ('user', 'product',)  # constraint - ограничение для бд
 
 # class ProductRating(models.Model):
 #     """

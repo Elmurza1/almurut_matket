@@ -1,9 +1,12 @@
 from django.contrib import admin
-from .models import Category, Product, ProductGallery
+from .models import Category, Product, ProductGallery, ProductUserRating
 
 
 # Register your models here.
 
+@admin.register(ProductUserRating)
+class ProductUserRatingAdmin(admin.ModelAdmin):
+    list_display = ['product', 'user', 'rating']
 
 @admin.register(ProductGallery)
 class ProductGalleryAdmin(admin.ModelAdmin):

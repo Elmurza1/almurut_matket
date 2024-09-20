@@ -1,8 +1,9 @@
 import datetime
 
 from django.http import Http404
+from django.shortcuts import redirect
 from django.views.generic import TemplateView, View
-from .models import Product
+from .models import Product, ProductUserRating
 
 # Create your views here.
 
@@ -45,21 +46,42 @@ class ProductDetailView(TemplateView):
     template_name = 'product-detail.html'
 
     def get_context_data(self, **kwargs):
-        try:
-            product = Product.objects.get(id=kwargs['pk'])
-        except Product.DoesNotExist:
-            raise Http404
 
         context = {
-            'product': product
+            'product': Product.objects.get(pk=self.kwargs['pk'])
         }
         return context
 
+
+class SendProductFeedbackView(View):
+    """Вью для сохранения отзыва пользователя для конкретного товара"""
+
+    def post(self, request, *args, **kwargs):
+        data = request.POST
+        rating_value = data['rating_value']
+        name_value = data['author']
+        email_value = data['email']
+        comment_value = data['comment']
+        product = Product.objects.get(id=kwargs['pk'])
+        user = request.user
+        if user.is_authenticated:
+            ProductUserRating.objects.create(
+                rating=rating_value,
+                product=product,
+                user=user,
+                name=name_value,
+                email=email_value,
+                comment=comment_value
+            )
+            return redirect(f'products/{product.id}/')
+        else:
+            return redirect('/login/')
 
 
 
 class RegisterView(TemplateView):
     template_name = 'register.html'
+
 
 class FavoriteView(TemplateView):
     template_name = 'favorites.html'

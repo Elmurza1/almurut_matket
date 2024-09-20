@@ -1,4 +1,6 @@
+from django.contrib.auth import login
 from django.shortcuts import render
+from django.template.context_processors import request
 from django.views import View
 from django.views.generic import TemplateView
 from users.models import CustomUser
@@ -31,6 +33,24 @@ class UserMakeRegistrationView(View):
 
 class LoginView(TemplateView):
     template_name = 'login.html'
+
+    def get_context_data(self, **kwargs):
+        data = request.POST
+        email = data['email']
+        password = data['password']
+
+        user = CustomUser.objects.filter(email=email)
+        print('пользователь', user)
+
+        correct = user.check_password(password)
+        print('корект равен', correct)
+
+
+        if correct == True:
+            login(request, user)
+            return render(request, 'login.html', context={'logged_in': True})
+        else:
+            return render(request, 'login.html', context={'logged_in': False})
 
 
 class UserMakeLoginView(View):
