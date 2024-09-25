@@ -34,17 +34,20 @@ class UserMakeRegistrationView(View):
 class LoginView(TemplateView):
     template_name = 'login.html'
 
-    def get_context_data(self, **kwargs):
+
+
+
+class UserMakeLoginView(View):
+    def post(self, request, *args, **kwargs):
         data = request.POST
-        email = data['email']
+        email = data['email_address']
         password = data['password']
 
-        user = CustomUser.objects.filter(email=email)
-        print('пользователь', user)
+        user = CustomUser.objects.get(email=email)
+        print('пользователь ', user)
 
         correct = user.check_password(password)
-        print('корект равен', correct)
-
+        print('коррект равен ', correct)
 
         if correct == True:
             login(request, user)
@@ -52,9 +55,6 @@ class LoginView(TemplateView):
         else:
             return render(request, 'login.html', context={'logged_in': False})
 
-
-class UserMakeLoginView(View):
-    pass
 
 
 

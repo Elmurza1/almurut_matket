@@ -2,6 +2,11 @@
 {% load static %}
 
 {% block content %}
+<style>
+    .li-review-product img {
+    width: 6{% static '0%;
+    }
+</style>
     <body>
     <!--[if lt IE 8]>
 		<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -197,7 +202,7 @@
                                     </div>
                                 </div>
                                 <div class="product-details-thumbs slider-thumbs-1">
-                                    <div class="sm-image"><img src="images/product/small-size/1.jpg" alt="product image thumb"></div>
+                                    <div class="sm-image"><img src="{{product_gallery.image.url}}" alt="product image thumb"></div>
                                 </div>
                             </div>
                             <!--// Product Details Left -->
@@ -207,7 +212,7 @@
                             <div class="product-details-view-content sp-normal-content pt-60">
                                 <div class="product-info">
                                     <h2>{{ product.name }}</h2>
-                                    <span class="product-details-ref">Категория: {{ product.category.name }}</span>
+                                    <span class="product-details-ref"><Категория></Категория>: {{ product.category.name }}</span>
                                     <div class="rating-box pt-20">
                                         <ul class="rating rating-with-review-item">
                                             <li><i class="fa fa-star-o"></i></li>
@@ -809,31 +814,12 @@
                                     <div class="product-details-left">
                                         <div class="product-details-images slider-navigation-1">
                                             <div class="lg-image">
-                                                <img src="images/product/large-size/1.jpg" alt="product image">
+                                                <img src="{% static 'images/product/large-size/1.jpg'%}" alt="product image">
                                             </div>
-                                            <div class="lg-image">
-                                                <img src="images/product/large-size/2.jpg" alt="product image">
-                                            </div>
-                                            <div class="lg-image">
-                                                <img src="images/product/large-size/3.jpg" alt="product image">
-                                            </div>
-                                            <div class="lg-image">
-                                                <img src="images/product/large-size/4.jpg" alt="product image">
-                                            </div>
-                                            <div class="lg-image">
-                                                <img src="images/product/large-size/5.jpg" alt="product image">
-                                            </div>
-                                            <div class="lg-image">
-                                                <img src="images/product/large-size/6.jpg" alt="product image">
-                                            </div>
-                                        </div>
+
                                         <div class="product-details-thumbs slider-thumbs-1">
-                                            <div class="sm-image"><img src="images/product/small-size/1.jpg" alt="product image thumb"></div>
-                                            <div class="sm-image"><img src="images/product/small-size/2.jpg" alt="product image thumb"></div>
-                                            <div class="sm-image"><img src="images/product/small-size/3.jpg" alt="product image thumb"></div>
-                                            <div class="sm-image"><img src="images/product/small-size/4.jpg" alt="product image thumb"></div>
-                                            <div class="sm-image"><img src="images/product/small-size/5.jpg" alt="product image thumb"></div>
-                                            <div class="sm-image"><img src="images/product/small-size/6.jpg" alt="product image thumb"></div>
+                                            <div class="sm-image"><img src="{{product_gallery.image.url}}" alt="product image thumb"></div>
+
                                         </div>
                                     </div>
                                     <!--// Product Details Left -->
