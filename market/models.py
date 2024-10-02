@@ -1,7 +1,7 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
-from users.models import CustomUser
+
 
 
 # Create your models here.
@@ -33,6 +33,7 @@ class Product(models.Model):
 
     new_expiry_date = models.DateField()
 
+
     def __str__(self):
         return self.name
 
@@ -57,6 +58,7 @@ class ProductGallery(models.Model):
 
 class ProductUserRating(models.Model):
     """Модель для рейтингов которые поставил пользователь для товара"""
+    from users.models import CustomUser
 
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -78,4 +80,6 @@ class ProductUserRating(models.Model):
 #     """
 #     product = models.ForeignKey(Product, on_delete=models.CASCADE)
 #     rating = models.PositiveSmallIntegerField()
+
+
 

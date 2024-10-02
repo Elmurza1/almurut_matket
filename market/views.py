@@ -129,3 +129,18 @@ class FavoriteView(TemplateView):
 
 class PageFotFound(TemplateView):
     template_name = '404.html'
+
+    def get_context_data(self, **kwargs):
+        context = {
+
+        }
+        return context
+
+class AddProductFavorite(TemplateView):
+    template_name =  'favorites.html'
+
+    def get_context_data(self, **kwargs):
+        context = {
+
+        }
+        return context
