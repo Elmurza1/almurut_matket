@@ -48,6 +48,7 @@ class ProductDetailView(TemplateView):
     template_name = 'product-detail.html'
 
     def get_context_data(self, **kwargs):
+        star = [1, 2, 3, 4, 5, 6, ]
         try:
             product = Product.objects.get(id=kwargs['pk'])
         except Product.DoesNotExist:
@@ -80,7 +81,8 @@ class ProductDetailView(TemplateView):
             'product': product,
             'rating': rating,
             'average_rating': average_rating,
-            'other_products': category_other_product_list
+            'other_products': category_other_product_list,
+            'range': star
         }
         return context
 
@@ -98,7 +100,7 @@ class SendProductFeedbackView(View):
         if user.is_authenticated:
             try:
                 product_rating = ProductUserRating.objects.get(product=product, user=user)
-            except ProductUserRating.DoesNotExsist:
+            except ProductUserRating.DoesNotExist:
                 ProductUserRating.objects.create(
                     rating=rating_value,
                     product=product,
