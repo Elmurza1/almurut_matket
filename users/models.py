@@ -1,15 +1,18 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+
 from users.menegers import CustomUserManager
 
 
 
 class CustomUser(AbstractUser):
+    from market.models import Product
 
     username = None
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+    favorite_product = models.ManyToManyField(Product)
 
     email = models.EmailField(
         unique=True,
