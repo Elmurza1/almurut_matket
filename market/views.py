@@ -1,5 +1,6 @@
 import datetime
 
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect
 from django.views.generic import TemplateView, View
@@ -11,12 +12,19 @@ class HomeView(TemplateView):
     template_name = 'index.html'
 
     def get_context_data(self, **kwargs):
-          context = {
-        'publication_list': Product.objects.all(),
+        # Получаем поисковый запрос
+        search_world = self.request.GET.get('query', '')
+        publication_list = Product.objects.filter(
+                Q(name__icontains=search_world) | Q(description__icontains=search_world)
+            )
 
-    }
 
-          return context
+        context = {
+            'publication_list': publication_list,
+            'search_world': search_world,
+        }
+        return context
+
 
 
 
@@ -25,8 +33,13 @@ class ProductView(TemplateView):
     template_name = 'product-list.html'
 
     def get_context_data(self, **kwargs):
+        search_world = self.request.GET.get('query', '')
+        publication_list = Product.objects.filter(
+            Q(name__icontains=search_world) | Q(description__icontains=search_world)
+        )
+
         context = {
-        'publication_list': Product.objects.all(),
+        'publication_list': publication_list,
         'new': datetime.datetime.now().date()
     }
         return context
@@ -163,14 +176,14 @@ class RemoveProductFromFavoriteView(TemplateView):
     template_name = 'favorites.html'
 
     def get_context_data(self, **kwargs):
-        user = self.request.user  # получаем пользователя, который делает запрос
+        user = self.request.user
 
         product_id = kwargs['pk']
         product = Product.objects.get(id=product_id)
-        user.favorite_product.remove(product)  # удаляем продукт из избранного
+        user.favorite_product.remove(product)
         user.save()
 
         context = {
-            'my_favorite_products': user.favorite_product.all()  # обновляем избранные продукты
+            'my_favorite_products': user.favorite_product.all()
         }
         return context
