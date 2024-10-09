@@ -128,21 +128,49 @@ class RegisterView(TemplateView):
 class FavoriteView(TemplateView):
     template_name = 'favorites.html'
 
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+        context = {
+            'my_favorite_products': user.favorite_product.all()
+        }
+        return context
 
 class PageFotFound(TemplateView):
     template_name = '404.html'
 
-    def get_context_data(self, **kwargs):
-        context = {
 
+class AddProductToFavoriteView(TemplateView):
+    template_name = 'favorites.html'
+
+    def get_context_data(self, **kwargs):
+        user = self.request.user
+
+        product_id = kwargs['pk']
+        product = Product.objects.get(id=product_id)
+        user.favorite_product.add(product)
+        user.save()
+
+        context = {
+            'my_favorite_products': user.favorite_product.all()
         }
         return context
 
-class AddProductFavorite(TemplateView):
-    template_name =  'favorites.html'
+
+
+
+class RemoveProductFromFavoriteView(TemplateView):
+    """Удаляет товар из избранного пользователя"""
+    template_name = 'favorites.html'
 
     def get_context_data(self, **kwargs):
-        context = {
+        user = self.request.user  # получаем пользователя, который делает запрос
 
+        product_id = kwargs['pk']
+        product = Product.objects.get(id=product_id)
+        user.favorite_product.remove(product)  # удаляем продукт из избранного
+        user.save()
+
+        context = {
+            'my_favorite_products': user.favorite_product.all()  # обновляем избранные продукты
         }
         return context
