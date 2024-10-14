@@ -18,7 +18,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login-list'),
     path('faq/', FaqView.as_view(), name='fag-list'),
     path('product-detail/<int:pk>/', ProductDetailView.as_view(), name='product-detail-url'),
-    path('favorites/', FavoriteView.as_view()),
+    path('favorites/', FavoriteView.as_view(), name= 'favorite-list'),
     path('add-product-to-favorite/<int:pk>/', AddProductToFavoriteView.as_view(), name='add-product-to-favorite-url'),
     path('remove/product-from-favorite/<int:pk>/', RemoveProductFromFavoriteView.as_view(), name='remove-from-favorite'),
     path('404/', PageFotFound.as_view(), name='404-list'),
