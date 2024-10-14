@@ -818,21 +818,38 @@
                                     </div>
                                     <div class="paginatoin-area">
                                         <div class="row">
+                                            {%for item in page_obj%}
                                             <div class="col-lg-6 col-md-6 pt-xs-15">
-                                                <p>Showing 1-12 of 13 item(s)</p>
+                                               <p>Showing {{ page_obj.start }}-{{ page_obj.end }} of {{ page_obj.paginator.count }} item(s)</p>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
                                                 <ul class="pagination-box pt-xs-20 pb-xs-15">
-                                                    <li><a href="#" class="Previous"><i class="fa fa-chevron-left"></i> Previous</a>
-                                                    </li>
-                                                    <li class="active"><a href="#">1</a></li>
-                                                    <li><a href="#">2</a></li>
-                                                    <li><a href="#">3</a></li>
-                                                    <li>
-                                                      <a href="#" class="Next"> Next <i class="fa fa-chevron-right"></i></a>
-                                                    </li>
+                                                    {% if page_obj.has_previous %}
+                                                         <li>
+                                                            <a href="?page={{ page_obj.previous_page_number }}&query={{ request.GET.query }}" class="Previous">
+                                                               <i class="fa fa-chevron-left"></i> Previous
+                                                            </a>
+                                                         </li>
+                                                    {% endif %}
+
+                                                     {% for page_num in page_obj.paginator.page_range %}
+                                                        {% if page_obj.number == page_num %}
+
+                                                        <li class="active"><a href="#">{{ page_num }}</a></li>
+                                                        {%else%}
+                                                                 <li><a href="?page={{ page_num }}&query={{ request.GET.query }}">{{ page_num }}</a></li>
+                                                    {%endif%}
+                                                   {%endfor%}
+                                                    {% if page_obj.has_next %}
+                                                     <li>
+                                                         <a href="?page={{ page_obj.next_page_number }}&query={{ request.GET.query }}" class="Next">
+                                                             Next <i class="fa fa-chevron-right"></i>
+                                                         </a>
+                                                     </li>
+                                                    {%endif%}
                                                 </ul>
                                             </div>
+                                            {%endfor %}
                                         </div>
                                     </div>
                                 </div>

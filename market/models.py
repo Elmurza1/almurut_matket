@@ -83,3 +83,12 @@ class ProductUserRating(models.Model):
 
 
 
+class WeatherData(models.Model):
+    city = models.CharField(max_length=100)
+    temperature = models.FloatField()
+    last_updated = models.DateTimeField()
+
+
+
+
+

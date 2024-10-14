@@ -349,11 +349,9 @@
                                                                                 <label>Your Rating</label>
                                                                                 <span>
                                                                                     <select name="rating_value" class="star-rating">
-                                                                                      <option value="1">1</option>
-                                                                                      <option value="2">2</option>
-                                                                                      <option value="3">3</option>
-                                                                                      <option value="4">4</option>
-                                                                                      <option value="5">5</option>
+                                                                                       {% for i in range %}
+                                                                                         <option value="{{ i }}" {% if i == rating %} selected {% endif %}>{{ i }}</option>
+                                                                                        {% endfor %}
                                                                                     </select>
                                                                                 </span>
                                                                             </p>
