@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Product, ProductGallery, ProductUserRating
+from .models import Category, Product, ProductGallery, ProductUserRating, WeatherData
 
 
 # Register your models here.
@@ -27,6 +27,11 @@ class ProductAdmin(admin.ModelAdmin):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name']
     search_fields = ['name']
+
+
+@admin.register(WeatherData)
+class WeatherDataAdmin(admin.ModelAdmin):
+    list_display = ['city', 'temperature']
 
 
 

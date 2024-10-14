@@ -5,7 +5,7 @@ from django.conf.urls.static import static
 from django.conf.urls.static import settings
 from django.urls import path
 from market.views import HomeView, ProductView, ShoppingView, ProductDetailView, FaqView, FavoriteView, PageFotFound, \
-    SendProductFeedbackView, AddProductToFavoriteView, RemoveProductFromFavoriteView
+    SendProductFeedbackView, AddProductToFavoriteView, RemoveProductFromFavoriteView, WearView
 from users.views import RegisterView, UserMakeRegistrationView, LoginView
 
 
@@ -24,5 +24,6 @@ urlpatterns = [
     path('404/', PageFotFound.as_view(), name='404-list'),
     path('user_register_page/', UserMakeRegistrationView.as_view(), name='make-registration-user'),
     path('products/<int:pk>/send-feedback/', SendProductFeedbackView.as_view(), name='send-feedback-url'),
+    path('weather/', WearView.as_view(), name='wear-list'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

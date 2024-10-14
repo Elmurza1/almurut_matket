@@ -1,10 +1,17 @@
 import datetime
+from datetime import timedelta
 
+import requests
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404
+from django.utils import timezone
+
 from django.shortcuts import redirect
+
 from django.views.generic import TemplateView, View
-from .models import Product, ProductUserRating, ProductGallery
+from .models import Product, ProductUserRating, ProductGallery, WeatherData
+
 
 # Create your views here.
 
@@ -33,12 +40,20 @@ class ProductView(TemplateView):
     template_name = 'product-list.html'
 
     def get_context_data(self, **kwargs):
+        publication = Product.objects.all()
+        paginator = Paginator(publication, 1)
+        page_number = self.request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+
+
+
         search_world = self.request.GET.get('query', '')
         publication_list = Product.objects.filter(
             Q(name__icontains=search_world) | Q(description__icontains=search_world)
         )
 
         context = {
+            'page_obj': page_obj,
         'publication_list': publication_list,
         'new': datetime.datetime.now().date()
     }
@@ -187,3 +202,55 @@ class RemoveProductFromFavoriteView(TemplateView):
             'my_favorite_products': user.favorite_product.all()
         }
         return context
+
+
+class WearView(TemplateView):
+    template_name = 'weather.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        city = self.request.GET.get('city', '')
+        api_key = '89df7a2b2efda6ed808ea4f4849c3d7f'
+
+        if city:
+            weather_data = WeatherData.objects.filter(city=city).first()
+
+
+            if weather_data and weather_data.last_updated > timezone.now() - timedelta(hours=1):
+                context.update({
+                    'city': weather_data.city,
+                    'temperature': weather_data.temperature,
+
+                })
+            else:
+
+                openweathermap = f'https://api.openweathermap.org/data/2.5/weather?q={city}&appid={api_key}&units=metric'
+                response = requests.get(openweathermap).json()
+
+                if response.get('cod') == 200:
+                    temperature = response['main']['temp']
+
+                    if weather_data:
+                        weather_data.temperature = temperature
+
+                        weather_data.last_updated = timezone.now()
+                        weather_data.save()
+
+                    else:
+                         WeatherData.objects.create(
+                             city=city,
+                             temperature=temperature,
+
+                             last_updated=timezone.now()
+                          )
+
+
+                context.update({
+                    'city': city,
+
+                    'temperature': temperature,
+
+                })
+
+
+            return context
