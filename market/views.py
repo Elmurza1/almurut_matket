@@ -41,7 +41,7 @@ class ProductView(TemplateView):
 
     def get_context_data(self, **kwargs):
         publication = Product.objects.all()
-        paginator = Paginator(publication, 1)
+        paginator = Paginator(publication, 2)
         page_number = self.request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
